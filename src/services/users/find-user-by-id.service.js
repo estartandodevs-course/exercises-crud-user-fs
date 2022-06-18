@@ -1,8 +1,14 @@
+const { loadUsersRepository } = require('../../repositories/user-repository')
+
 async function findUserById(id) {
-  /*
-  - TODO 25: Deve retornar NULL se o usuário com o email passado nao existir;
-  - TODO 26: Deve retornar um usuário válido se ele existir nno banco; 
-*/
+
+
+const usersRepository = await loadUsersRepository()
+
+const user = usersRepository.filter((obj) => obj.id == id)
+if (user[0] == null) return null;
+
+return user[0]
 }
 
 module.exports = { findUserById };

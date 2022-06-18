@@ -1,7 +1,13 @@
+
+const { loadUsersRepository } = require('../../repositories/user-repository')
+
 async function searchUsers(name) {
-  /*
-  - TODO 28: Deve retornar a lista de usuários válidos filtrado por nome;
-*/
+
+const usersRepository = await loadUsersRepository()
+
+const user = usersRepository.filter((obj) => obj.name == name)
+
+return user;
 }
 
 module.exports = { searchUsers };

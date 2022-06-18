@@ -3,6 +3,8 @@
   Não deve conter regras de negócio!
 */
 
+
+
 const fs = require('fs')
 const path = require('path')
 const dataPath = path.resolve(__dirname,'../data/users.json')
