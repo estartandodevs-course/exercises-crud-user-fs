@@ -3,41 +3,62 @@
   Não deve conter regras de negócio!
 */
 
+const fs = require('fs')
+const path = require('path')
+const dataPath = path.resolve(__dirname,'../data/users.json')
+
 async function loadUsersRepository() {
-  /*
-  - TODO 1 : Deve retornar uma lista de usuários a partir do caminho src/data/users.json;
-  - TODO 2 : Deve ser usado um método de leitura do FS como readFile nessa implementação;  
-  */
+
+  const data = fs.readFileSync(dataPath,"utf8")  
+  const users = JSON.parse(data)
+  return(users) ;
+
 }
 
-/*
-  - TODO 3: Deve retornar uma exceção de erro "User is required" caso não seja passado os dados
-  - TODO 4: Deve ser usado um método de escrita do FS como writeFile, writeFileSync, etc;   
-  - TODO 5: Deve retornar o usuário após salvar no banco de dados;
-*/
 
 async function createUserRepository(user) {
-  /*
-  - TODO 6: Deve retornar uma exceção de erro "User Id is required" caso não seja passado o ID
-  - TODO 7: Deve ser usado um método de escrita do FS como writeFile, writeFileSync, etc;  
-  - TODO 8: Deve retornar TRUE após salvar no banco de dados;
-  */
+
+  if (user == null) throw new Error('User is required');
+  const usersRepository = await loadUsersRepository() 
+  const data = [...usersRepository,user]
+  fs.writeFileSync(dataPath,JSON.stringify(data))
+  return user
+
 }
 
 async function updateUserRepository(id, data) {
-  /*
-  - TODO 9: Deve retornar uma exceção de erro "User Id is required" caso não seja passado o ID
-  - TODO 10: Deve ser usado um método de escrita do FS como writeFile, writeFileSync, etc;  
-  - TODO 11: Deve retornar TRUE após remover um dado no banco de dados;
-*/
+
+  if( id == null) throw new Error('User Id is required');
+  const usersRepository = await loadUsersRepository()
+
+  const user = usersRepository.filter((obj) => obj.id == id )
+  const withoutUser = usersRepository.filter((obj) => obj.id != id )
+
+  const updatedUser = {
+    id: id,
+    name: data.name,
+    email: data.email,
+    passwd: user[0].passwd,
+    phone: data.phone,
+  }
+  
+  const dataUpdated = [...withoutUser,updatedUser]
+  fs.writeFileSync(dataPath,JSON.stringify(dataUpdated))
+
+  return true;
 }
+// updateUserRepository("1655576536381", {name: 'Pedrinho', email:'pedrinho@email.com',phone:'63984412527'})
 
 async function deleteUserRepository(id) {
-  /*
-  - TODO 12: Deve retornar uma exceção de erro "User Id is required" caso não seja passado o ID
-  - TODO 13: Deve ser usado um método de escrita do FS como writeFile, writeFileSync, etc;  
-  - TODO 14: Deve retornar TRUE após remover um dado no banco de dados;
-*/
+
+if( id == null) throw new Error('User Id is required');
+const usersRepository = await loadUsersRepository()
+
+const newUsersRepository = usersRepository.filter((obj) => obj.id != id )
+
+fs.writeFileSync(dataPath,JSON.stringify(newUsersRepository))
+
+return true;
 }
 
 module.exports = {
