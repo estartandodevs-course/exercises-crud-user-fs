@@ -1,17 +1,11 @@
 const { loadUsersRepository } = require('../../repositories/user-repository');
+const { cloneUser } = require('../../utils/merge-users');
 
 function loadAllUsers() {
   const users = loadUsersRepository();
-  const newUsers = users.map((user)=>{
-    return {
-      id: user.id,
-      name: user.name,
-      email: user.email,
-      phone: user.phone,
-      status: true
-    };
-  })
-  return newUsers;
+  return users.map((user)=>{
+    return cloneUser(user);
+  });
 }
 
 module.exports = { loadAllUsers };

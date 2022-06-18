@@ -2,11 +2,11 @@ const { loadUsersRepository } = require('../../repositories/user-repository');
 
 function findUserById(id) {
   const users = loadUsersRepository();
-  const user = users.filter((user)=> user.id === id);
-  if(user.length === 0){
+  const user = users.find((user)=> user.id === id);
+  if(!user){
     return null;
   }
-  return user[0];
+  return user;
 }
 
 module.exports = { findUserById };

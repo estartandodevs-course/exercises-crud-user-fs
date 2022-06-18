@@ -1,6 +1,6 @@
 const { loadUsersRepository, createUserRepository } = require('../../repositories/user-repository');
 const { encryptPassword } = require('../../utils/encrypt-password');
-const shortid = require('shortid');
+const { cloneUser } = require('../../utils/merge-users');
 
 function createUser({ name, email, password, phone }) {
   if (!name || !email || !password) {
@@ -15,18 +15,17 @@ function createUser({ name, email, password, phone }) {
   if(isExist.includes(true)){
     return Promise.reject(new Error('User already exists'));
   }
-  const id = shortid();
+  const id = 1000 + users.length;
   const encriptedPassword = encryptPassword(password);
   const user = {
     id,
     name,
     email,
     password: encriptedPassword,
-    phone,
-    status: true
+    phone
   };
   createUserRepository(user);
-  return user;
+  return cloneUser(user);
 }
 
 module.exports = { createUser };
