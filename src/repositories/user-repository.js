@@ -21,46 +21,49 @@ async function loadUsersRepository() {
 async function createUserRepository(user) {
 
   if (user == null) throw new Error('User is required');
-  const usersRepository = await loadUsersRepository() 
-  const data = [...usersRepository,user]
-  fs.writeFileSync(dataPath,JSON.stringify(data))
-  return user
+  const usersRepository = await loadUsersRepository();
+  const data = [...usersRepository,user];
+  fs.writeFileSync(dataPath,JSON.stringify(data));
+  return user;
 
 }
 
 async function updateUserRepository(id, data) {
 
   if( id == null) throw new Error('User Id is required');
-  const usersRepository = await loadUsersRepository()
+  const usersRepository = await loadUsersRepository();
 
-  const user = usersRepository.filter((obj) => obj.id == id )
-  const withoutUser = usersRepository.filter((obj) => obj.id != id )
+  const user = usersRepository.filter((obj) => obj.id == id );
+  const withoutUser = usersRepository.filter((obj) => obj.id != id );
 
   const updatedUser = {
     id: id,
-    name: data.name,
-    email: data.email,
-    passwd: user[0].passwd,
-    phone: data.phone,
-  }
+    name: data.name || user[0].name,
+    email: data.email || user[0].email,
+    password: data.password || user[0].password,
+    phone: data.phone || user[0].phone,
+    status: true
+    
+  };
   
-  const dataUpdated = [...withoutUser,updatedUser]
-  fs.writeFileSync(dataPath,JSON.stringify(dataUpdated))
+  const dataUpdated = [updatedUser,...withoutUser];
+  fs.writeFileSync(dataPath,JSON.stringify(dataUpdated));
 
   return true;
+  
 }
 // updateUserRepository("1655576536381", {name: 'Pedrinho', email:'pedrinho@email.com',phone:'63984412527'})
 
 async function deleteUserRepository(id) {
 
-if( id == null) throw new Error('User Id is required');
-const usersRepository = await loadUsersRepository()
+  if( id == null) throw new Error('User Id is required');
+  const usersRepository = await loadUsersRepository();
 
-const newUsersRepository = usersRepository.filter((obj) => obj.id != id )
+  const newUsersRepository = usersRepository.filter((obj) => obj.id != id );
 
-fs.writeFileSync(dataPath,JSON.stringify(newUsersRepository))
+  fs.writeFileSync(dataPath,JSON.stringify(newUsersRepository));
 
-return true;
+  return true;
 }
 
 module.exports = {

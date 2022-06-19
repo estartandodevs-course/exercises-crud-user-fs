@@ -1,5 +1,5 @@
 const { loadUsersRepository,  createUserRepository,  } = require('../../repositories/user-repository')
-
+const { encryptPassword } = require('../../utils/encrypt-password')
 
 async function createUser({ name, email, password, phone }) {
   /*
@@ -15,7 +15,7 @@ async function createUser({ name, email, password, phone }) {
     id: newId,
     name: name,
     email: email,
-    passwd: password,
+    password: encryptPassword(password),
     phone: phone,
     status: true
   }
