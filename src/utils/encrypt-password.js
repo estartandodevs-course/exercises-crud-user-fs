@@ -1,4 +1,5 @@
 const crypto = require('crypto');
+require('dotenv').config();
 
 function encryptPassword(password) {
   if(!password){
