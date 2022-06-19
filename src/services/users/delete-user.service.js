@@ -6,7 +6,7 @@ function deleteUser(id) {
   }
   const users = loadUsersRepository();
   const isExist = users.map((user) => {
-    if (user.id === id) {
+    if (user.id == id) {
       return true;
     }
   });

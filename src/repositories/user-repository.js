@@ -32,7 +32,7 @@ function updateUserRepository(id, data) {
   }
   const datas = loadUsersRepository();
   datas.map((user)=>{
-    if(user.id === id){
+    if(user.id == id){
       Object.keys(user).map((key)=>{
         if(isKey(data, key)){
           user[key] = data[key];
@@ -50,7 +50,7 @@ function deleteUserRepository(id) {
   }
   const datas = loadUsersRepository();
   datas.map((user)=>{
-    if(user.id === id){
+    if(user.id == id){
       datas.splice(datas.indexOf(user), 1);
     }
   });
