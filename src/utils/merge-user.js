@@ -7,6 +7,7 @@ function mergeUser(user){
     const status = {
         status: true
     };
+    user.id = parseInt(user.id);
     const map = {
         id: 'id',
         name: 'name',

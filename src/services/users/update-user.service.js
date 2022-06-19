@@ -5,7 +5,7 @@ function updateUser(id, { name, email, phone }) {
     return Promise.reject(new Error("User ID is required"));
   }
   const users = loadUsersRepository();
-  const isExist = users.find(user => user.id == id);
+  const isExist = users.find(user => user.id === id);
   if (!isExist) {
     return Promise.reject(new Error("User not exists"));
   }

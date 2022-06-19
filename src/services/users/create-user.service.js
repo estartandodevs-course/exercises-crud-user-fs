@@ -15,7 +15,7 @@ function createUser({ name, email, password, phone }) {
   if(isExist.includes(true)){
     return Promise.reject(new Error('User already exists'));
   }
-  const id = 1000 + users.length;
+  const id = JSON.stringify(1000 + users.length);
   const encriptedPassword = encryptPassword(password);
   const user = {
     id,
