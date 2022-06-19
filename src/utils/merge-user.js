@@ -2,7 +2,7 @@ const objectMapper = require('object-mapper');
 
 function mergeUser(user){
     if(!user){
-        return Promise.reject(new Error('User is required'));
+        throw new Error('User is required');
     }
     const status = {
         status: true

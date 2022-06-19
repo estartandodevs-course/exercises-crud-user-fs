@@ -1,5 +1,5 @@
 const { loadUsersRepository } = require('../../repositories/user-repository');
-const { mergeUser } = require('../../utils/merge-users');
+const { mergeUser } = require('../../utils/merge-user');
 
 function loadAllUsers() {
   const users = loadUsersRepository();

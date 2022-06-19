@@ -1,6 +1,6 @@
 const { loadUsersRepository, createUserRepository } = require('../../repositories/user-repository');
 const { encryptPassword } = require('../../utils/encrypt-password');
-const { mergeUser } = require('../../utils/merge-users');
+const { mergeUser } = require('../../utils/merge-user');
 
 function createUser({ name, email, password, phone }) {
   if (!name || !email || !password) {
