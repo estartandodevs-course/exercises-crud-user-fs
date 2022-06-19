@@ -1,5 +1,5 @@
 const { loadUsersRepository } = require('../../repositories/user-repository');
-const { cloneUser } = require('../../utils/merge-users');
+const { mergeUser } = require('../../utils/merge-users');
 
 function searchUsers(name) {
   const users = loadUsersRepository();
@@ -7,7 +7,7 @@ function searchUsers(name) {
     return user.name.toLowerCase().includes(name.toLowerCase());
   });
   return nameUsers.map((user)=>{
-    return cloneUser(user);
+    return mergeUser(user);
   });
 }
 

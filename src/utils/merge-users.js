@@ -1,6 +1,6 @@
 const objectMapper = require('object-mapper');
 
-function cloneUser(user){
+function mergeUser(user){
     if(!user){
         return Promise.reject(new Error('User is required'));
     }
@@ -17,4 +17,4 @@ function cloneUser(user){
     return objectMapper.merge(user, status, map);
 }
 
-module.exports = { cloneUser };
+module.exports = { mergeUser };

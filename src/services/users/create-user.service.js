@@ -1,6 +1,6 @@
 const { loadUsersRepository, createUserRepository } = require('../../repositories/user-repository');
 const { encryptPassword } = require('../../utils/encrypt-password');
-const { cloneUser } = require('../../utils/merge-users');
+const { mergeUser } = require('../../utils/merge-users');
 
 function createUser({ name, email, password, phone }) {
   if (!name || !email || !password) {
@@ -25,7 +25,7 @@ function createUser({ name, email, password, phone }) {
     phone
   };
   createUserRepository(user);
-  return cloneUser(user);
+  return mergeUser(user);
 }
 
 module.exports = { createUser };
