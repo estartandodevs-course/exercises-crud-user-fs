@@ -2,9 +2,6 @@ const { loadUsersRepository,  createUserRepository,  } = require('../../reposito
 const { encryptPassword } = require('../../utils/encrypt-password')
 
 async function createUser({ name, email, password, phone }) {
-  /*
-  - TODO 18: Deve ser usado a funcionalidade "encryptPassword" para proteger o password;
-*/
   if ( name == null || email  == null || phone  == null) {throw new Error('Name, Email, Password are required')};
 
   const usersRepository = await loadUsersRepository()
