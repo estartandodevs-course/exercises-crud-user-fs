@@ -16,7 +16,6 @@
   "dependencies": {
     "dotenv": "^16.0.1",
     "inquirer": "^8.2.4",
-    "object-mapper": "^6.2.0",
-    "shortid": "^2.2.16"
+    "object-mapper": "^6.2.0"
   }
 }
