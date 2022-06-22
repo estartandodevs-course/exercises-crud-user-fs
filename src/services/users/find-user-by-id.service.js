@@ -5,10 +5,10 @@ async function findUserById(id) {
 
 const usersRepository = await loadUsersRepository()
 
-const user = usersRepository.filter((obj) => obj.id == id)
-if (user[0] == null) return null;
+const user = usersRepository.find((obj) => obj.id == id)
+if (user == null) return null;
 
-return user[0]
+return user;
 }
 
 module.exports = { findUserById };

@@ -21,6 +21,7 @@ async function loadUsersRepository() {
 async function createUserRepository(user) {
 
   if (user == null) throw new Error('User is required');
+
   const usersRepository = await loadUsersRepository();
   const data = [...usersRepository,user];
   fs.writeFileSync(dataPath,JSON.stringify(data));
@@ -31,32 +32,41 @@ async function createUserRepository(user) {
 async function updateUserRepository(id, data) {
 
   if( id == null) throw new Error('User Id is required');
+  
   const usersRepository = await loadUsersRepository();
 
-  const user = usersRepository.filter((obj) => obj.id == id );
-  const withoutUser = usersRepository.filter((obj) => obj.id != id );
+  const user = usersRepository.find((obj) => obj.id == id );
 
   const updatedUser = {
     id: id,
-    name: data.name || user[0].name,
-    email: data.email || user[0].email,
-    password: data.password || user[0].password,
-    phone: data.phone || user[0].phone,
-    status: true
-    
+    name: data.name || user.name,
+    email: data.email || user.email,
+    password: data.password || user.password,
+    phone: data.phone || user.phone  
+  };
+
+  const updateRepository = ( usersRepository, objUpdatedUser  ) => {
+    return usersRepository.map((objUser) => {
+      if(objUser.id == objUpdatedUser.id){
+        return objUpdatedUser
+      }
+      return user
+    });
   };
   
-  const dataUpdated = [updatedUser,...withoutUser];
-  fs.writeFileSync(dataPath,JSON.stringify(dataUpdated));
+  const newUserRepository = updateRepository(usersRepository,updatedUser)
 
-  return true;
+  fs.writeFileSync(dataPath,JSON.stringify(newUserRepository));
+
+  return newUserRepository;
   
 }
-// updateUserRepository("1655576536381", {name: 'Pedrinho', email:'pedrinho@email.com',phone:'63984412527'})
+// updateUserRepository("1655671065772", {name: 'Pedrinho', email:'pedrinho@email.com',phone:'63984412527'})
 
 async function deleteUserRepository(id) {
 
   if( id == null) throw new Error('User Id is required');
+
   const usersRepository = await loadUsersRepository();
 
   const newUsersRepository = usersRepository.filter((obj) => obj.id != id );
