@@ -5,9 +5,17 @@ async function searchUsers(name) {
 
 const usersRepository = await loadUsersRepository()
 
-const user = usersRepository.filter((obj) => obj.name === name)
+const user = usersRepository.filter((user) => user.name === name) 
 
-return user;
+return user.map((element) => {
+    return {
+        name:element.name,
+        email:element.email,
+        phone:element.phone
+    }
+})
+// console.log(user);
 }
+// searchUsers('Pedro');
 
 module.exports = { searchUsers };
