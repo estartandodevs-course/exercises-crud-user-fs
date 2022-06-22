@@ -5,7 +5,6 @@ const { findUserByEmail } = require('./find-user-by-email.service');
 async function createUser({ name, email, password, phone }) {
   if ( name == null || email  == null || phone  == null) {throw new Error('Name, Email, Password are required')};
 
-  // const usersRepository = await loadUsersRepository()
   
   const newId = new Date().getTime(); //criar util p gerar id com crypto
   
