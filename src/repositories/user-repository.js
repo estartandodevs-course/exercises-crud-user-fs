@@ -53,12 +53,12 @@ async function updateUserRepository(id, data) {
       return user
     });
   };
-  
+
   const newUserRepository = updateRepository(usersRepository,updatedUser)
 
   fs.writeFileSync(dataPath,JSON.stringify(newUserRepository));
 
-  return newUserRepository;
+  return true;
   
 }
 // updateUserRepository("1655671065772", {name: 'Pedrinho', email:'pedrinho@email.com',phone:'63984412527'})
