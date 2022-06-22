@@ -8,6 +8,8 @@
 const fs = require('fs')
 const path = require('path')
 const dataPath = path.resolve(__dirname,'../data/users.json')
+const { verifyParameters} = require('../utils/parameters-validate')
+
 
 async function loadUsersRepository() {
 
@@ -20,8 +22,7 @@ async function loadUsersRepository() {
 
 async function createUserRepository(user) {
 
-  if (user == null) throw new Error('User is required');
-
+  verifyParameters([user] , 'User is required')
   const usersRepository = await loadUsersRepository();
   const data = [...usersRepository,user];
   fs.writeFileSync(dataPath,JSON.stringify(data));
@@ -31,11 +32,11 @@ async function createUserRepository(user) {
 
 async function updateUserRepository(id, data) {
 
-  if( id == null) throw new Error('User Id is required');
+  verifyParameters([id] , 'User Id is required')
   
   const usersRepository = await loadUsersRepository();
 
-  const user = usersRepository.find((obj) => obj.id == id );
+  const user = usersRepository.find((obj) => obj.id === id );
 
   const updatedUser = {
     id: id,
@@ -65,11 +66,10 @@ async function updateUserRepository(id, data) {
 
 async function deleteUserRepository(id) {
 
-  if( id == null) throw new Error('User Id is required');
-
+  verifyParameters([id] , 'User Id is required')
   const usersRepository = await loadUsersRepository();
 
-  const newUsersRepository = usersRepository.filter((obj) => obj.id != id );
+  const newUsersRepository = usersRepository.filter((obj) => obj.id !== id );
 
   fs.writeFileSync(dataPath,JSON.stringify(newUsersRepository));
 

@@ -1,15 +1,14 @@
 const { createUserRepository } = require('../../repositories/user-repository')
 const { encryptPassword } = require('../../utils/encrypt-password')
 const { findUserByEmail } = require('./find-user-by-email.service');
-
+const { setId } = require('../../utils/id-generator')
+const { verifyParameters} = require('../../utils/parameters-validate')
 async function createUser({ name, email, password, phone }) {
-  if ( name == null || email  == null || phone  == null) {throw new Error('Name, Email, Password are required')};
-
   
-  const newId = new Date().getTime(); //criar util p gerar id com crypto
+  verifyParameters([name, email, password, phone] , 'Name, Email, Password are required')
   
   const user = {
-    id: newId,
+    id: setId(),
     name: name,
     email: email,
     password: encryptPassword(password),
@@ -19,7 +18,7 @@ async function createUser({ name, email, password, phone }) {
   
   const userAlreadyExist = await findUserByEmail(email)
 
-  if (userAlreadyExist == false){
+  if (userAlreadyExist === false){
     try {
       createUserRepository(user)
       return user;      

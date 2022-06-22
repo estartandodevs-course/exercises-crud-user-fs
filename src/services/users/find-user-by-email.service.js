@@ -5,7 +5,7 @@ async function findUserByEmail(email) {
 
 const usersRepository = await loadUsersRepository()
 
-const user = usersRepository.find((obj) => obj.email == email)
+const user = usersRepository.find((obj) => obj.email === email)
 if (user == null) return false;
 
 return user;

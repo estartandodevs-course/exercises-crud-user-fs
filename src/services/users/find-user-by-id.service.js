@@ -5,7 +5,7 @@ async function findUserById(id) {
 
 const usersRepository = await loadUsersRepository()
 
-const user = usersRepository.find((obj) => obj.id == id)
+const user = usersRepository.find((obj) => obj.id === id)
 if (user == null) return null;
 
 return user;

@@ -1,15 +1,14 @@
 const { deleteUserRepository  } = require('../../repositories/user-repository')
 const { findUserById  } = require('./find-user-by-id.service');
-
+const { verifyParameters} = require('../../utils/parameters-validate')
 
 async function deleteUser(id) {
 
-  if (id == null) throw new Error('User ID is required');
-
+  verifyParameters([id] , 'User ID is required')
 
   const userExist = await findUserById(id)
 
-  if (userExist != null){
+  if (userExist !== null){
     try {
       await deleteUserRepository(id)  
       return true;
