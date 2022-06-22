@@ -1,10 +1,30 @@
-function encryptPassword(password) {
-  /*
-  - TODO 32: Deve retornar uma exceção de erro "Password is required" caso não seja passado um password;
-  - TODO 33: Deve retornar uma exceção de erro "Password must be at least 8 character" caso o password passado seja menor que 8 caracteres;
-  - TODO 34: Deve retornar um HASH maior que 100 para indicar sucesso; 
+const crypto = require('crypto');
+const { verifyParameters } = require('./parameters-validate')
+require('dotenv').config();
 
-*/
+function encryptPassword(password) {
+
+    // solução meio desnecessária. estava bringando com o javascript aqui
+const isPasswdValid = (passwd) => {
+    if (passwd.length > 7) {
+    return true;
+    } else { return null } 
 }
+verifyParameters([password],'Password is required')
+verifyParameters([isPasswdValid(password)],'Password must be at least 8 characters' );
+
+// if (isPasswdValid) throw new Error('Password must be at least 8 characters');
+
+
+const salt = 'estartando devs',
+      iterations = 1000,
+      keylen = 64,
+      digest = 'sha512';
+
+return crypto.pbkdf2Sync(password, salt, iterations, keylen, digest).toString(`hex`);
+
+
+}
+// console.log(encryptPassword('123456'));
 
 module.exports = { encryptPassword };

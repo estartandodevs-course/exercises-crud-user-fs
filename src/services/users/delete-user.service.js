@@ -1,10 +1,24 @@
-async function deleteUser(id) {
-  /*
+const { deleteUserRepository  } = require('../../repositories/user-repository')
+const { findUserById  } = require('./find-user-by-id.service');
+const { verifyParameters} = require('../../utils/parameters-validate')
 
-  - TODO 20: Deve retornar uma exceção de erro "User ID is required" se o ID não for passado;
-  - TODO 21: Se pelo ID passado não existir um usuário no banco, deve retornar uma exceção com o erro "User not exists";
-  - TODO 22: Com o sucesso na remoção, deve retornar TRUE
-*/
+async function deleteUser(id) {
+
+  verifyParameters([id] , 'User ID is required')
+
+  const userExist = await findUserById(id)
+
+  if (userExist !== null){
+    try {
+      await deleteUserRepository(id)  
+      return true;
+    } catch (error) {
+      throw new Error('Erro interno::',error)
+    }
+  } else {
+    throw new Error('User not exists');
+  }
+
 }
 
 module.exports = { deleteUser };

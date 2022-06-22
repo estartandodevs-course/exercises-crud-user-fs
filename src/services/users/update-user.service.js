@@ -1,9 +1,23 @@
+const { updateUserRepository} = require('../../repositories/user-repository')
+const { findUserById  } = require('./find-user-by-id.service');
+const { verifyParameters} = require('../../utils/parameters-validate')
+
 async function updateUser(id, { name, email, phone }) {
-  /*
-  - TODO 29: Deve retornar uma exceção de erro "User ID is required" caso não tenha passado ID;
-  - TODO 30: Se pelo ID passado não existir um usuário no banco, deve retornar uma exceção com o erro "User not exists";
-  - TODO 31: Deve retornar TRUE se o usuário for atualizado corretamente;   
-*/
+  
+
+  verifyParameters([id] , 'User ID is required')
+  const userExist = await findUserById(id)
+
+  if (userExist != null){
+    try {
+      await updateUserRepository(id, { name, email, phone });  
+      return true;
+    } catch (error) {
+      throw new Error('Erro interno::',error)
+    }
+  } else {
+    throw new Error('User not exists');
+  }
 }
 
 module.exports = { updateUser };
