@@ -69,7 +69,7 @@ async function deleteUserRepository(id) {
   verifyParameters([id] , 'User Id is required')
   const usersRepository = await loadUsersRepository();
 
-  const newUsersRepository = usersRepository.filter((obj) => obj.id !== id );
+  const newUsersRepository = usersRepository.filter((obj) => obj.id !== parseInt(id) );
 
   fs.writeFileSync(dataPath,JSON.stringify(newUsersRepository));
 
