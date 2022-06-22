@@ -3,6 +3,7 @@ const { encryptPassword } = require('../../utils/encrypt-password')
 const { findUserByEmail } = require('./find-user-by-email.service');
 const { setId } = require('../../utils/id-generator')
 const { verifyParameters} = require('../../utils/parameters-validate')
+
 async function createUser({ name, email, password, phone }) {
   
   verifyParameters([name, email, password, phone] , 'Name, Email, Password are required')
