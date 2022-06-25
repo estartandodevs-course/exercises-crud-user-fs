@@ -1,7 +1,14 @@
-async function searchUsers(name) {
-  /*
-  - TODO 28: Deve retornar a lista de usuários válidos filtrado por nome;
-*/
+const { loadUsersRepository } = require('../../repositories/user-repository');
+const { mergeUser } = require('../../utils/merge-user');
+
+function searchUsers(name) {
+  const users = loadUsersRepository();
+  const nameUsers = users.filter((user)=>{
+    return user.name.toLowerCase().includes(name.toLowerCase());
+  });
+  return nameUsers.map((user)=>{
+    return mergeUser(user);
+  });
 }
 
 module.exports = { searchUsers };
