@@ -49,7 +49,7 @@ async function createUserRepository(user) {
   */
   if (!user) throw new Error('User is required');
 
-  usersList = await loadUsersRepository();
+  let usersList = await loadUsersRepository();
   usersList.push(user);
 
   let stringUsersList = JSON.stringify(usersList, null, 2)
@@ -61,16 +61,6 @@ async function createUserRepository(user) {
   })
 }
 
-const user = {
-  id: 1654826575603,
-    name: 'Jao',
-    email: 'jao@gmail.com',
-    password: '123456',
-    phone: '11999999999'
-}
-
-// createUserRepository(user)
-
 async function updateUserRepository(id, data) {
   /*
   - TODO 9: Deve retornar uma exceção de erro "User Id is required" caso não seja passado o ID
@@ -79,36 +69,27 @@ async function updateUserRepository(id, data) {
 */
   if (!id) throw new Error('User Id is required');
 
-  usersList = await loadUsersRepository();
-  // let stringUsersList = JSON.stringify(usersList);
+  let usersList = await loadUsersRepository();
 
   usersList.forEach((user) => {
     if (parseInt(user.id) === id) { 
-      let updateUserData = [{
-        id: id,
-        name: data.name || user.name,
-        email: data.email || user.email,
-        password: data.password || user.password,
-        phone: data.phone || user.phone
-      }]
-      updateUserData = JSON.stringify(updateUserData, null, 2)
+        user.id = id
+        user.name = data.name 
+        user.email = data.email 
+        user.password = data.password 
+        user.phone = data.phone 
+    }
 
-      fs.writeFile(usersListPath, updateUserData, (err) => {
+      let updateUsersList = JSON.stringify(usersList, null, 2)
+
+      fs.writeFile(usersListPath, updateUsersList, (err) => {
       if (err) throw err;
 
       return true;
       })
-    } 
+    
   })
 }
-
-const dataUser = {
-      name: "Name updated",
-      email: "email updated",
-      password: "password updated",
-      phone: "phone updated",
-    };
-updateUserRepository(1654826575603, dataUser)
 
 async function deleteUserRepository(id) {
   /*
@@ -117,7 +98,25 @@ async function deleteUserRepository(id) {
   - TODO 14: Deve retornar TRUE após remover um dado no banco de dados;
 */
   if (!id) throw new Error('User Id is required');
+
+  let usersList = await loadUsersRepository();
+  let key = 0;
+
+  usersList.forEach((user) => {
+    if (parseInt(user.id) === id) {
+      
+      usersList.splice(key, 1)
+      let updatedUserData = JSON.stringify(usersList, null, 2)
+
+      fs.writeFile(usersListPath, updatedUserData, (err) => {
+        if (err) throw err;
+        return true
+      })
+    }
+    key++;
+  })
 }
+
 
 module.exports = {
   loadUsersRepository,
