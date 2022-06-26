@@ -29,12 +29,6 @@ async function loadUsersRepository() {
   return usersList;
 }
 
-// loadUsersRepository().then((data) => {
-//   console.log(data.length)
-//   console.log(data[0])
-//   console.log(data[1])
-// })
-
 /*
   - TODO 3: Deve retornar uma exceção de erro "User is required" caso não seja passado os dados
   - TODO 4: Deve ser usado um método de escrita do FS como writeFile, writeFileSync, etc;   
@@ -52,7 +46,7 @@ async function createUserRepository(user) {
   let usersList = await loadUsersRepository();
   usersList.push(user);
 
-  let stringUsersList = JSON.stringify(usersList, null, 2)
+  let stringUsersList = JSON.stringify(usersList, null, 2);
 
   fs.writeFile(usersListPath, stringUsersList, (err) => {
     if (err) throw err;
@@ -73,14 +67,14 @@ async function updateUserRepository(id, data) {
 
   usersList.forEach((user) => {
     if (parseInt(user.id) === id) { 
-        user.id = id
-        user.name = data.name 
-        user.email = data.email 
-        user.password = data.password 
-        user.phone = data.phone 
+        user.id = id;
+        user.name = data.name;
+        user.email = data.email;
+        user.password = data.password;
+        user.phone = data.phone;
     }
 
-      let updateUsersList = JSON.stringify(usersList, null, 2)
+      let updateUsersList = JSON.stringify(usersList, null, 2);
 
       fs.writeFile(usersListPath, updateUsersList, (err) => {
       if (err) throw err;
@@ -105,12 +99,12 @@ async function deleteUserRepository(id) {
   usersList.forEach((user) => {
     if (parseInt(user.id) === id) {
       
-      usersList.splice(key, 1)
-      let updatedUserData = JSON.stringify(usersList, null, 2)
+      usersList.splice(key, 1);
+      let updatedUserData = JSON.stringify(usersList, null, 2);
 
       fs.writeFile(usersListPath, updatedUserData, (err) => {
         if (err) throw err;
-        return true
+        return true;
       })
     }
     key++;
