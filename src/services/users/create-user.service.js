@@ -1,5 +1,5 @@
-const crypto = require ('crypto');
 const {loadUsersRepository} = require ("../../repositories/user-repository");
+const {encryptPassword} = require ("../../utils/encrypt-password")
 
 async function createUser({name, email, password, phone}) {
   /*
@@ -15,15 +15,12 @@ async function createUser({name, email, password, phone}) {
   usersList.forEach((userData) => {
     if (userData.email.toString() === email) throw new Error ('User already exists');
   });
-  
-  const salt = "fraseparamisturarnacriptografiaç";
-  const key = crypto.pbkdf2Sync(password.toString(), salt, 1000, 64, 'sha512')
 
   const createdUser = {
     id: Date.now(),
     name: name,
     email: email,
-    password: key,
+    password: encryptPassword(),
     phone: phone,
     status: true
   }
