@@ -18,10 +18,9 @@ async function createUser({name, email, password, phone}) {
   
   const salt = "fraseparamisturarnacriptografiaç";
   const key = crypto.pbkdf2Sync(password.toString(), salt, 1000, 64, 'sha512')
-  // console.log(key.toString('hex'))
 
   const createdUser = {
-    id: parseInt(Math.random() * (10000000000000 * 1000) - 1000),
+    id: Date.now(),
     name: name,
     email: email,
     password: key,
@@ -30,12 +29,5 @@ async function createUser({name, email, password, phone}) {
   }
   return createdUser;
 }
-
-createUser({
-  name: 'karine', 
-  email: 'karina@mail', 
-  password: '123344', 
-  phone: 99999-8999
-})
 
 module.exports = { createUser };
