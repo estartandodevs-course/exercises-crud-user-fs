@@ -68,10 +68,10 @@ async function updateUserRepository(id, data) {
   usersList.forEach((user) => {
     if (parseInt(user.id) === id) { 
         user.id = id;
-        user.name = data.name;
-        user.email = data.email;
-        user.password = data.password;
-        user.phone = data.phone;
+        user.name = data.name || user.name;
+        user.email = data.email || user.email;
+        user.password = data.password || user.password;
+        user.phone = data.phone || user.phone;
     }
 
       let updateUsersList = JSON.stringify(usersList, null, 2);

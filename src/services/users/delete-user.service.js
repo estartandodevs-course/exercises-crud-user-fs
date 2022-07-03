@@ -15,7 +15,7 @@ async function deleteUser(id) {
 
   usersList.forEach((userData) => {
     if (parseInt(userData.id) === id) {
-      deleteUserRepository();
+      deleteUserRepository(id);
 
       userIDCount++;
     }
