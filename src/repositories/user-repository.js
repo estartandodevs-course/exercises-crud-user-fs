@@ -10,9 +10,7 @@ function loadUsersRepository() {
 
 
 async function createUserRepository(user) {
-  if (!user) {
-    throw new Error("User is required");
-  }
+  if (!user) throw new Error("User is required");
   const users = await loadUsersRepository();
   const newUsers = [...users, user]
   fs.writeFileSync(getDirectory, JSON.stringify(newUsers));
@@ -21,9 +19,7 @@ async function createUserRepository(user) {
 
 
 async function updateUserRepository(id, data) {
-  if(!id){
-    throw new Error("User Id is required")
-  }
+  if(!id) throw new Error("User Id is required")
   const users = await loadUsersRepository()
   users.forEach((user) => {
     if (user.id === id){
@@ -40,9 +36,7 @@ async function updateUserRepository(id, data) {
 
 
 async function deleteUserRepository(id) {
-  if(!id){
-    throw new Error("User Id is required")
-  }
+  if(!id) throw new Error("User Id is required")
   const users = await loadUsersRepository()
   const newUsers = users.filter((user) => user.id !== id)
   fs.writeFileSync(getDirectory, JSON.stringify(newUsers))

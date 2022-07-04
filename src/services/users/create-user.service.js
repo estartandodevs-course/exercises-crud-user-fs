@@ -1,4 +1,7 @@
+const createUserRepository = require("../../repositories/user-repository")
 async function createUser({ name, email, password, phone }) {
+if(!name || !email || !password) throw new Error("Name, Email, Password are required")
+
   /*
   - TODO 15: Os campos name, email, password são obrigatórios, caso algum não seja passado deve retornar uma exceção de error "Name, Email, Password are required";
   - TODO 16: Se o email passado já existir no banco para outro usuário, deve retornar uma exceção com o erro "User already exists";
