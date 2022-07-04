@@ -1,8 +1,15 @@
+const { loadUsersRepository } = require('../../repositories/user-repository.js')
+
 async function findUserByEmail(email) {
-  /*
-  - TODO 23: Deve retornar FALSE se o usuário com o email passado nao existir;
-  - TODO 24: Deve retornar um usuário válido se ele existir no banco;
-*/
+  const allUsers = await loadUsersRepository()
+  const user = allUsers.find((userObj) => userObj.email === email)
+
+  return (user === undefined) ? false : {
+    name: user.name,
+    email: user.email,
+    phone: user.phone
+  }
+
 }
 
 module.exports = { findUserByEmail };
