@@ -1,19 +1,19 @@
-const {loadUsersRepository} = require('../../repositories/user-repository.js')
+const { loadUsersRepository } = require('../../repositories/user-repository.js')
 
 async function loadAllUsers() {
-
   const users = await loadUsersRepository()
-  const validUsers = users.map((user) => {
-    users[0]. status == true
+  const validUsers = []
+
+  users.forEach((user) => {
+    if (!user.status) {
+      user['status'] = true
+      validUsers.push(user)
+    }
+    else if (user.status === true) {
+      validUsers.push(user)
+    }
   })
   return validUsers
-
-  
-
-
-  /*
-  - TODO 27: Deve retornar a lista (com itens ou vazia) de usuários válidos;
-*/
 }
 
 module.exports = { loadAllUsers };
