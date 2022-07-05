@@ -37,8 +37,10 @@ async function updateUserRepository(id, data) {
 
 async function deleteUserRepository(id) {
   if(!id) throw new Error("User Id is required")
+
   const users = await loadUsersRepository()
   const newUsers = users.filter((user) => user.id !== id)
+  
   fs.writeFileSync(getDirectory, JSON.stringify(newUsers))
   return true
 }

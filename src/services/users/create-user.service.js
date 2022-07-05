@@ -6,24 +6,24 @@ const { encryptPassword } = require('../../utils/encrypt-password.js')
 async function createUser({ name, email, password, phone }) {
   const users = await loadUsersRepository()
 
-  if (!name || !email || !password) throw new Error("Name, Email, Password are required")
+  if (!name || !email || !password) return Promise.reject(new Error("Name, Email, Password are required"))
 
-  const userExist = await findUserByEmail(email)
-  if (userExist === true) {
-    throw new Error("User already exists")
+
+  if (await findUserByEmail(email) === true) {
+    const newUser = {
+      id: Date.now(),
+      name: name,
+      email: email,
+      password: encryptPassword(password),
+      phone: phone,
+      status: true
+    }
+    await createUserRepository(newUser)
+    return newUser
   }
-
-  const newUser = {
-    id: Date.now(),
-    name: name,
-    email: email,
-    password: encryptPassword(password),
-    phone: phone,
-    status: true
+  else{
+    throw new Error('User already exists')
   }
-  createUserRepository(newUser)
-  return newUser
-
 
   /*
   - TODO 15: Os campos name, email, password são obrigatórios, caso algum não seja passado deve retornar uma exceção de error "Name, Email, Password are required";
