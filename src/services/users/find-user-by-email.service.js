@@ -2,14 +2,15 @@ const { loadUsersRepository } = require('../../repositories/user-repository.js')
 
 async function findUserByEmail(email) {
   const allUsers = await loadUsersRepository()
-  const user = allUsers.find((userObj) => userObj.email === email)
+  const userByEmail = allUsers.find((userObj) => userObj.email === email)
 
-  return (user === undefined) ? false : {
-    name: user.name,
-    email: user.email,
-    phone: user.phone
+  return (userByEmail === undefined) ? false : {
+    name: userByEmail.name,
+    email: userByEmail.email,
+    phone: userByEmail.phone
   }
 
 }
 
 module.exports = { findUserByEmail };
+
